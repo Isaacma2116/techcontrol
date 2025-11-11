@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# EQUIPOS
+Aplicación web para control de inventario de equipos de cómputo. Permite registrar equipos con sus características, asignar responsables y gestionar el software instalado. Brinda una vista clara del estado del inventario para mejorar la administración y el seguimiento dentro de la empresa.
+=======
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -52,3 +56,4 @@ export default tseslint.config({
   },
 })
 ```
+>>>>>>> 5719b04 (frontend, backend y base de datos)
