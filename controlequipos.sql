@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
--- Host: localhost    Database: techcontrol
+-- Host: 127.0.0.1    Database: techcontrol
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	8.0.46
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,17 +24,17 @@ DROP TABLE IF EXISTS `accesorios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accesorios` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo_inventario` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_inventario` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo_accesorio_id` int unsigned NOT NULL,
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `marca` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marca` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
   `fecha_compra` date DEFAULT NULL,
   `garantia_vence` date DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_baja` date DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -67,7 +67,7 @@ DROP TABLE IF EXISTS `areas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `areas` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -99,12 +99,12 @@ CREATE TABLE `asignaciones_accesorios` (
   `colaborador_id` int unsigned NOT NULL,
   `fecha_asignacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_devolucion` datetime DEFAULT NULL,
-  `estado` varchar(10) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
+  `estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
   `asignado_por` int unsigned DEFAULT NULL,
   `recibido_por` int unsigned DEFAULT NULL,
-  `observaciones_asignacion` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_devolucion` text COLLATE utf8mb4_unicode_ci,
-  `condicion_devolucion` enum('bueno','regular','danado','perdido') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones_asignacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_devolucion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `condicion_devolucion` enum('bueno','regular','danado','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `accesorio_vigente_id` int unsigned GENERATED ALWAYS AS (if((`fecha_devolucion` is null),`accesorio_id`,NULL)) STORED,
@@ -146,12 +146,12 @@ CREATE TABLE `asignaciones_celulares` (
   `colaborador_id` int unsigned NOT NULL,
   `fecha_asignacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_devolucion` datetime DEFAULT NULL,
-  `estado` varchar(10) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
+  `estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
   `asignado_por` int unsigned DEFAULT NULL,
   `recibido_por` int unsigned DEFAULT NULL,
-  `observaciones_asignacion` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_devolucion` text COLLATE utf8mb4_unicode_ci,
-  `condicion_devolucion` enum('bueno','regular','danado','perdido') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones_asignacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_devolucion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `condicion_devolucion` enum('bueno','regular','danado','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `celular_vigente_id` int unsigned GENERATED ALWAYS AS (if((`fecha_devolucion` is null),`celular_id`,NULL)) STORED,
@@ -193,12 +193,12 @@ CREATE TABLE `asignaciones_equipos` (
   `equipo_id` int unsigned NOT NULL,
   `fecha_asignacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_devolucion` datetime DEFAULT NULL,
-  `estado` varchar(10) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
+  `estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
   `asignado_por` int unsigned DEFAULT NULL,
   `recibido_por` int unsigned DEFAULT NULL,
-  `observaciones_asignacion` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_devolucion` text COLLATE utf8mb4_unicode_ci,
-  `condicion_devolucion` enum('bueno','regular','danado','perdido') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones_asignacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_devolucion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `condicion_devolucion` enum('bueno','regular','danado','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `equipo_vigente_id` int unsigned GENERATED ALWAYS AS (if((`fecha_devolucion` is null),`equipo_id`,NULL)) STORED,
@@ -241,12 +241,12 @@ CREATE TABLE `asignaciones_impresoras` (
   `colaborador_id` int unsigned NOT NULL,
   `fecha_asignacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_devolucion` datetime DEFAULT NULL,
-  `estado` varchar(10) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
+  `estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_devolucion` is null),_utf8mb4'activa',_utf8mb4'devuelta')) STORED,
   `asignado_por` int unsigned DEFAULT NULL,
   `recibido_por` int unsigned DEFAULT NULL,
-  `observaciones_asignacion` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_devolucion` text COLLATE utf8mb4_unicode_ci,
-  `condicion_devolucion` enum('bueno','regular','danado','perdido') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones_asignacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_devolucion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `condicion_devolucion` enum('bueno','regular','danado','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `impresora_vigente_id` int unsigned GENERATED ALWAYS AS (if((`fecha_devolucion` is null),`impresora_id`,NULL)) STORED,
@@ -288,16 +288,16 @@ CREATE TABLE `asignaciones_licencias` (
   `equipo_id` int unsigned DEFAULT NULL,
   `fecha_asignacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_liberacion` datetime DEFAULT NULL,
-  `estado` varchar(10) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_liberacion` is null),_utf8mb4'activa',_utf8mb4'liberada')) STORED,
-  `identificador_activacion` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones_asignacion` text COLLATE utf8mb4_unicode_ci,
-  `observaciones_liberacion` text COLLATE utf8mb4_unicode_ci,
+  `estado` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`fecha_liberacion` is null),_utf8mb4'activa',_utf8mb4'liberada')) STORED,
+  `identificador_activacion` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones_asignacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `observaciones_liberacion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `asignado_por` int unsigned DEFAULT NULL,
   `liberado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `vigente_colaborador` varchar(40) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if(((`fecha_liberacion` is null) and (`colaborador_id` is not null)),concat(`licencia_id`,_utf8mb4':C:',`colaborador_id`),NULL)) STORED,
-  `vigente_equipo` varchar(40) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if(((`fecha_liberacion` is null) and (`equipo_id` is not null)),concat(`licencia_id`,_utf8mb4':E:',`equipo_id`),NULL)) STORED,
+  `vigente_colaborador` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if(((`fecha_liberacion` is null) and (`colaborador_id` is not null)),concat(`licencia_id`,_utf8mb4':C:',`colaborador_id`),NULL)) STORED,
+  `vigente_equipo` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if(((`fecha_liberacion` is null) and (`equipo_id` is not null)),concat(`licencia_id`,_utf8mb4':E:',`equipo_id`),NULL)) STORED,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_asig_lic_colaborador` (`vigente_colaborador`),
   UNIQUE KEY `uq_asig_lic_equipo` (`vigente_equipo`),
@@ -335,10 +335,10 @@ DROP TABLE IF EXISTS `audit_logs`;
 CREATE TABLE `audit_logs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int unsigned DEFAULT NULL,
-  `action` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `entity` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `entity_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `action` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `entity` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entity_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `details` json DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -347,7 +347,7 @@ CREATE TABLE `audit_logs` (
   KEY `idx_audit_user` (`user_id`,`created_at`),
   KEY `idx_audit_action` (`action`),
   CONSTRAINT `fk_audit_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ CREATE TABLE `audit_logs` (
 
 LOCK TABLES `audit_logs` WRITE;
 /*!40000 ALTER TABLE `audit_logs` DISABLE KEYS */;
-INSERT INTO `audit_logs` VALUES (1,1,'creada','carta_responsiva','1','::1','{\"folio\": \"CR-2026-000001\", \"recursos\": 1}','2026-09-20 22:30:22'),(2,1,'modificada','carta_responsiva','1','::1','{\"recursos\": 2}','2026-09-20 22:31:28'),(3,1,'modificada','carta_responsiva','1','::1','{\"recursos\": 2}','2026-09-21 10:15:48'),(4,1,'pdf_generado','carta_responsiva','1','::1','{\"folio\": \"CR-2026-000001\"}','2026-09-21 10:15:50'),(5,1,'firmada_subida','carta_responsiva','1','::1','{\"tamano\": 33896, \"version\": 1, \"archivo_original\": \"CR-2026-000001 (2).pdf\"}','2026-09-21 10:19:35'),(6,1,'logo_actualizado','empresa','1','::1',NULL,'2026-09-21 10:23:34'),(7,1,'actualizada','empresa','1','::1',NULL,'2026-09-21 10:23:38'),(8,1,'pdf_descargado','carta_responsiva','1','::1',NULL,'2026-09-21 10:23:55'),(9,1,'creada','carta_responsiva','2','::1','{\"folio\": \"CR-2026-000002\", \"recursos\": 1}','2026-09-21 10:28:39'),(10,1,'pdf_generado','carta_responsiva','2','::1','{\"folio\": \"CR-2026-000002\"}','2026-09-21 10:28:40'),(11,1,'creado','software','1','::1','{\"nombre\": \"office\"}','2026-09-22 10:41:25'),(12,1,'creada','licencia','1','::1','{\"codigo\": \"LIC-00001\", \"software\": \"office\", \"cantidad_total\": 5}','2026-09-22 10:42:26'),(13,1,'asignada','licencia','1','::1','{\"codigo\": \"LIC-00001\", \"equipo_id\": 1, \"colaborador_id\": null}','2026-09-22 10:44:31'),(14,1,'agendado','mantenimiento','1','::1','{\"tipo\": \"preventivo\", \"fecha\": \"2026-09-22\", \"folio\": \"MNT-2026-000001\", \"unidad\": \"15\"}','2026-09-22 10:46:16'),(15,1,'foto_actualizada','usuario','1','::1',NULL,'2026-09-22 22:41:53'),(16,1,'exportado','datos',NULL,'::1','{\"hojas\": [\"Equipos\", \"Accesorios\", \"Impresoras\", \"Celulares\", \"Colaboradores\", \"Licencias\"]}','2026-09-23 10:23:15'),(17,1,'editado','equipo','1','::1','{\"codigo_inventario\": \"15\"}','2026-09-23 10:42:40');
+INSERT INTO `audit_logs` VALUES (1,1,'creada','carta_responsiva','1','::1','{\"folio\": \"CR-2026-000001\", \"recursos\": 1}','2026-09-20 22:30:22'),(2,1,'modificada','carta_responsiva','1','::1','{\"recursos\": 2}','2026-09-20 22:31:28'),(3,1,'modificada','carta_responsiva','1','::1','{\"recursos\": 2}','2026-09-21 10:15:48'),(4,1,'pdf_generado','carta_responsiva','1','::1','{\"folio\": \"CR-2026-000001\"}','2026-09-21 10:15:50'),(5,1,'firmada_subida','carta_responsiva','1','::1','{\"tamano\": 33896, \"version\": 1, \"archivo_original\": \"CR-2026-000001 (2).pdf\"}','2026-09-21 10:19:35'),(6,1,'logo_actualizado','empresa','1','::1',NULL,'2026-09-21 10:23:34'),(7,1,'actualizada','empresa','1','::1',NULL,'2026-09-21 10:23:38'),(8,1,'pdf_descargado','carta_responsiva','1','::1',NULL,'2026-09-21 10:23:55'),(9,1,'creada','carta_responsiva','2','::1','{\"folio\": \"CR-2026-000002\", \"recursos\": 1}','2026-09-21 10:28:39'),(10,1,'pdf_generado','carta_responsiva','2','::1','{\"folio\": \"CR-2026-000002\"}','2026-09-21 10:28:40'),(11,1,'creado','software','1','::1','{\"nombre\": \"office\"}','2026-09-22 10:41:25'),(12,1,'creada','licencia','1','::1','{\"codigo\": \"LIC-00001\", \"software\": \"office\", \"cantidad_total\": 5}','2026-09-22 10:42:26'),(13,1,'asignada','licencia','1','::1','{\"codigo\": \"LIC-00001\", \"equipo_id\": 1, \"colaborador_id\": null}','2026-09-22 10:44:31'),(14,1,'agendado','mantenimiento','1','::1','{\"tipo\": \"preventivo\", \"fecha\": \"2026-09-22\", \"folio\": \"MNT-2026-000001\", \"unidad\": \"15\"}','2026-09-22 10:46:16'),(15,1,'foto_actualizada','usuario','1','::1',NULL,'2026-09-22 22:41:53'),(16,1,'exportado','datos',NULL,'::1','{\"hojas\": [\"Equipos\", \"Accesorios\", \"Impresoras\", \"Celulares\", \"Colaboradores\", \"Licencias\"]}','2026-09-23 10:23:15'),(17,1,'editado','equipo','1','::1','{\"codigo_inventario\": \"15\"}','2026-09-23 10:42:40'),(18,1,'editado','equipo','1','::1','{\"codigo_inventario\": \"15\"}','2026-09-24 14:46:08'),(19,1,'password_consultada','equipo','1','::1','{\"codigo_inventario\": \"15\"}','2026-09-24 14:46:16'),(20,1,'password_consultada','equipo','1','::1','{\"codigo_inventario\": \"15\"}','2026-09-24 14:46:16');
 /*!40000 ALTER TABLE `audit_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +369,7 @@ DROP TABLE IF EXISTS `cargos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cargos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -397,18 +397,18 @@ DROP TABLE IF EXISTS `cartas_responsivas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cartas_responsivas` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `folio` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `folio` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `anio` smallint unsigned NOT NULL,
   `consecutivo` int unsigned NOT NULL,
   `colaborador_id` int unsigned NOT NULL,
-  `plantilla` enum('equipo','celular','impresora','accesorio','general') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `estado` enum('borrador','generada','pendiente_firma','firmada','cancelada') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'borrador',
+  `plantilla` enum('equipo','celular','impresora','accesorio','general') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` enum('borrador','generada','pendiente_firma','firmada','cancelada') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'borrador',
   `fecha_entrega` date NOT NULL,
   `fecha_devolucion_esperada` date DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `condiciones_especiales` text COLLATE utf8mb4_unicode_ci,
-  `entrega_nombre` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `entrega_cargo` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `condiciones_especiales` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `entrega_nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entrega_cargo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `colaborador_snapshot` json DEFAULT NULL,
   `empresa_snapshot` json DEFAULT NULL,
   `fecha_firma` date DEFAULT NULL,
@@ -416,7 +416,7 @@ CREATE TABLE `cartas_responsivas` (
   `generada_por` int unsigned DEFAULT NULL,
   `cancelada_en` datetime DEFAULT NULL,
   `cancelada_por` int unsigned DEFAULT NULL,
-  `motivo_cancelacion` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo_cancelacion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -460,17 +460,17 @@ DROP TABLE IF EXISTS `cartas_responsivas_documentos`;
 CREATE TABLE `cartas_responsivas_documentos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `carta_id` int unsigned NOT NULL,
-  `tipo` enum('generado','firmado','firma_colaborador','firma_entrega') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` enum('generado','firmado','firma_colaborador','firma_entrega') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `version` int unsigned NOT NULL DEFAULT '1',
   `vigente` tinyint(1) NOT NULL DEFAULT '1',
-  `archivo` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_original` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mime` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `archivo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_original` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mime` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tamano` int unsigned NOT NULL,
-  `sha256` char(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sha256` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `subido_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `vigente_clave` varchar(40) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`vigente` = 1),concat(`carta_id`,_utf8mb4':',`tipo`),NULL)) STORED,
+  `vigente_clave` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`vigente` = 1),concat(`carta_id`,_utf8mb4':',`tipo`),NULL)) STORED,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_cartas_docs_version` (`carta_id`,`tipo`,`version`),
   UNIQUE KEY `uq_cartas_docs_archivo` (`archivo`),
@@ -501,7 +501,7 @@ DROP TABLE IF EXISTS `cartas_responsivas_items`;
 CREATE TABLE `cartas_responsivas_items` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `carta_id` int unsigned NOT NULL,
-  `tipo_recurso` enum('EQUIPO','ACCESORIO','IMPRESORA','CELULAR') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_recurso` enum('EQUIPO','ACCESORIO','IMPRESORA','CELULAR') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `asignacion_equipo_id` int unsigned DEFAULT NULL,
   `asignacion_accesorio_id` int unsigned DEFAULT NULL,
   `asignacion_impresora_id` int unsigned DEFAULT NULL,
@@ -509,7 +509,7 @@ CREATE TABLE `cartas_responsivas_items` (
   `snapshot` json DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `orden` smallint unsigned NOT NULL DEFAULT '0',
-  `asignacion_clave` varchar(30) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`activo` = 1),concat(`tipo_recurso`,_utf8mb4':',coalesce(`asignacion_equipo_id`,`asignacion_accesorio_id`,`asignacion_impresora_id`,`asignacion_celular_id`)),NULL)) STORED,
+  `asignacion_clave` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (if((`activo` = 1),concat(`tipo_recurso`,_utf8mb4':',coalesce(`asignacion_equipo_id`,`asignacion_accesorio_id`,`asignacion_impresora_id`,`asignacion_celular_id`)),NULL)) STORED,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_cartas_items_asignacion` (`asignacion_clave`),
   KEY `fk_cartas_items_asig_equipo` (`asignacion_equipo_id`),
@@ -545,7 +545,7 @@ DROP TABLE IF EXISTS `categorias_software`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorias_software` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_categorias_software_nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -570,27 +570,27 @@ DROP TABLE IF EXISTS `celulares`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `celulares` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo_inventario` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `marca` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imei_1` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imei_2` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sistema_operativo` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `almacenamiento` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ram` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_telefono` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `operador` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo_asociado` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_inventario` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marca` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imei_1` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imei_2` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sistema_operativo` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `almacenamiento` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ram` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_telefono` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `operador` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_asociado` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `componentes_adicionales` json DEFAULT NULL,
-  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
+  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
   `fecha_compra` date DEFAULT NULL,
   `fecha_renovacion` date DEFAULT NULL,
   `garantia_vence` date DEFAULT NULL,
-  `garantia_detalle` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `garantia_detalle` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_baja` date DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -624,17 +624,17 @@ DROP TABLE IF EXISTS `colaboradores`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `colaboradores` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_empleado` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellido_paterno` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apellido_materno` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_empleado` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_paterno` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellido_materno` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `area_id` int unsigned NOT NULL,
   `cargo_id` int unsigned NOT NULL,
-  `correo_empresarial` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono_empresarial` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo_personal` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono_personal` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fotografia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_empresarial` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_empresarial` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo_personal` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono_personal` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fotografia` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_alta` date NOT NULL,
   `fecha_baja` date DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
@@ -671,25 +671,25 @@ DROP TABLE IF EXISTS `configuracion_empresa`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `configuracion_empresa` (
   `id` tinyint unsigned NOT NULL DEFAULT '1',
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Mi empresa',
-  `rfc` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sitio_web` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pie_documento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `entrega_nombre` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `entrega_cargo` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `folio_prefijo` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CR',
-  `texto_declaracion` text COLLATE utf8mb4_unicode_ci,
-  `texto_condiciones` text COLLATE utf8mb4_unicode_ci,
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Mi empresa',
+  `rfc` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sitio_web` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pie_documento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entrega_nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entrega_cargo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `folio_prefijo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'CR',
+  `texto_declaracion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `texto_condiciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `updated_by` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `descripcion` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `formato_fecha` enum('larga','corta') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'larga',
-  `encabezado_documento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `formato_fecha` enum('larga','corta') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'larga',
+  `encabezado_documento` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `requiere_reautenticacion_sensible` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_configuracion_empresa_user` (`updated_by`),
@@ -717,26 +717,26 @@ DROP TABLE IF EXISTS `dispositivos_red`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dispositivos_red` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` enum('router','switch','access_point','firewall','repetidor','antena','modem','controlador_wifi','servidor_red','otro') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `marca` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mac_address` varchar(17) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip_publica` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` enum('router','switch','access_point','firewall','repetidor','antena','modem','controlador_wifi','servidor_red','otro') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marca` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mac_address` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_publica` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ubicacion_id` int unsigned DEFAULT NULL,
-  `rack` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `puerto` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rack` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `puerto` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vlan_admin_id` int unsigned DEFAULT NULL,
-  `estado` enum('activo','inactivo','mantenimiento','baja') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
+  `estado` enum('activo','inactivo','mantenimiento','baja') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
   `responsable_id` int unsigned DEFAULT NULL,
   `fecha_instalacion` date DEFAULT NULL,
   `fecha_garantia` date DEFAULT NULL,
   `proveedor_id` int unsigned DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -812,29 +812,30 @@ DROP TABLE IF EXISTS `equipos`;
 CREATE TABLE `equipos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `tipo_equipo_id` int unsigned NOT NULL,
-  `marca` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `codigo_inventario` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `procesador` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ram` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `disco_duro` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tarjeta_madre` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tarjeta_grafica` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sistema_operativo` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mac_address` varchar(17) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hostname` varchar(63) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `marca` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `codigo_inventario` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `procesador` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ram` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `disco_duro` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tarjeta_madre` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tarjeta_grafica` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sistema_operativo` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mac_address` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hostname` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `componentes_adicionales` json DEFAULT NULL,
-  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
-  `estado_fisico` enum('excelente','bueno','regular','malo') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
+  `estado_fisico` enum('excelente','bueno','regular','malo') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `fecha_compra` date DEFAULT NULL,
   `garantia_vence` date DEFAULT NULL,
-  `garantia_detalle` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `garantia_detalle` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_baja` date DEFAULT NULL,
+  `password_cifrado` varbinary(512) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_equipos_codigo` (`codigo_inventario`),
   UNIQUE KEY `uq_equipos_serie` (`numero_serie`),
@@ -852,7 +853,7 @@ CREATE TABLE `equipos` (
 
 LOCK TABLES `equipos` WRITE;
 /*!40000 ALTER TABLE `equipos` DISABLE KEYS */;
-INSERT INTO `equipos` VALUES (1,1,'hp','2200','15','012258444','intel','15','512','n/a','amd ryzen','windows','C8:94:02:40:AA:FD','gifyudfhddfd',NULL,'asignado','excelente','kgffffddfdcvbcxfdfdfd','2026-09-20 16:49:46','2026-09-23 10:42:40','2026-09-01','2026-09-25','n/a','4cc2b304-4a6c-4fb5-95f6-e0d628fbb7a9.png',NULL);
+INSERT INTO `equipos` VALUES (1,1,'hp','2200','15','012258444','intel','15','512','n/a','amd ryzen','windows','C8:94:02:40:AA:FD','gifyudfhddfd',NULL,'asignado','excelente','kgffffddfdcvbcxfdfdfd','2026-09-20 16:49:46','2026-09-24 14:46:08','2026-09-01','2026-09-25','n/a','4cc2b304-4a6c-4fb5-95f6-e0d628fbb7a9.png',NULL,_binary '�xj6�-D\�\�\�)�&�5\r�/\�qЈ*1�%T)�f̙^C�O');
 /*!40000 ALTER TABLE `equipos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -865,25 +866,25 @@ DROP TABLE IF EXISTS `impresoras`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `impresoras` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo_inventario` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_inventario` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo_impresora_id` int unsigned NOT NULL,
-  `marca` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `modelo` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mac_address` varchar(17) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hostname` varchar(63) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `marca` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `modelo` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mac_address` varchar(17) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hostname` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ubicacion_id` int unsigned DEFAULT NULL,
-  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
-  `tipo_conexion` enum('usb','red','wifi') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` enum('disponible','asignado','mantenimiento','reparacion','baja','perdido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'disponible',
+  `tipo_conexion` enum('usb','red','wifi') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `imprime_color` tinyint(1) NOT NULL DEFAULT '0',
   `duplex` tinyint(1) NOT NULL DEFAULT '0',
   `contador_impresiones` int unsigned DEFAULT NULL,
   `fecha_compra` date DEFAULT NULL,
   `garantia_vence` date DEFAULT NULL,
-  `garantia_detalle` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `garantia_detalle` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_baja` date DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -919,7 +920,7 @@ DROP TABLE IF EXISTS `licencias`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `licencias` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `software_id` int unsigned NOT NULL,
   `proveedor_id` int unsigned DEFAULT NULL,
   `modelo_id` int unsigned NOT NULL,
@@ -929,15 +930,15 @@ CREATE TABLE `licencias` (
   `fecha_compra` date DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_vencimiento` date DEFAULT NULL,
-  `periodicidad` enum('unica','mensual','anual','bianual','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unica',
+  `periodicidad` enum('unica','mensual','anual','bianual','otro') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unica',
   `renovacion_automatica` tinyint(1) NOT NULL DEFAULT '0',
   `costo` decimal(12,2) unsigned DEFAULT NULL,
-  `moneda` char(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'MXN',
-  `numero_contrato` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_factura` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `moneda` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'MXN',
+  `numero_contrato` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_factura` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `renovacion_de_id` int unsigned DEFAULT NULL,
-  `estado` enum('activa','suspendida','cancelada') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `estado` enum('activa','suspendida','cancelada') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -982,28 +983,28 @@ DROP TABLE IF EXISTS `mantenimientos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mantenimientos` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `folio` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `folio` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `anio` smallint unsigned NOT NULL,
   `consecutivo` int unsigned NOT NULL,
-  `tipo` enum('preventivo','correctivo') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo_recurso` enum('EQUIPO','ACCESORIO','IMPRESORA','CELULAR') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` enum('preventivo','correctivo') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_recurso` enum('EQUIPO','ACCESORIO','IMPRESORA','CELULAR') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `equipo_id` int unsigned DEFAULT NULL,
   `accesorio_id` int unsigned DEFAULT NULL,
   `impresora_id` int unsigned DEFAULT NULL,
   `celular_id` int unsigned DEFAULT NULL,
-  `estado` enum('programado','en_proceso','realizado','reprogramado','cancelado') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'programado',
-  `prioridad` enum('alta','media','baja') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'media',
+  `estado` enum('programado','en_proceso','realizado','reprogramado','cancelado') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'programado',
+  `prioridad` enum('alta','media','baja') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'media',
   `fecha_programada` date NOT NULL,
   `hora_programada` time DEFAULT NULL,
-  `motivo` text COLLATE utf8mb4_unicode_ci,
+  `motivo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `fecha_realizado` date DEFAULT NULL,
-  `trabajo_realizado` text COLLATE utf8mb4_unicode_ci,
+  `trabajo_realizado` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `costo` decimal(10,2) unsigned DEFAULT NULL,
-  `proveedor` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `proveedor` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `responsable_id` int unsigned DEFAULT NULL,
   `reprogramado_de` int unsigned DEFAULT NULL,
-  `motivo_cancelacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `motivo_cancelacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1057,10 +1058,10 @@ DROP TABLE IF EXISTS `mantenimientos_componentes`;
 CREATE TABLE `mantenimientos_componentes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `mantenimiento_id` int unsigned NOT NULL,
-  `accion` enum('instalado','reemplazado','retirado','actualizado','limpiado','revisado') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `componente` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `detalle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `numero_serie` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `accion` enum('instalado','reemplazado','retirado','actualizado','limpiado','revisado') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `componente` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `detalle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_serie` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `costo` decimal(10,2) unsigned DEFAULT NULL,
   `orden` smallint unsigned NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1089,10 +1090,10 @@ DROP TABLE IF EXISTS `modelos_licencia`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `modelos_licencia` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `codigo` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ambito` enum('usuario','dispositivo','ambos') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ambos',
-  `temporalidad` enum('perpetua','suscripcion') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'suscripcion',
+  `codigo` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ambito` enum('usuario','dispositivo','ambos') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ambos',
+  `temporalidad` enum('perpetua','suscripcion') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'suscripcion',
   `requiere_desactivacion` tinyint(1) NOT NULL DEFAULT '0',
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `orden` smallint unsigned NOT NULL DEFAULT '0',
@@ -1120,7 +1121,7 @@ DROP TABLE IF EXISTS `notificacion_preferencias`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notificacion_preferencias` (
   `usuario_id` int unsigned NOT NULL,
-  `categoria` enum('inventario','mantenimientos','garantias','licencias','redes') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` enum('inventario','mantenimientos','garantias','licencias','redes') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `canal_sistema` tinyint(1) NOT NULL DEFAULT '1',
   `canal_correo` tinyint(1) NOT NULL DEFAULT '0',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1148,15 +1149,15 @@ DROP TABLE IF EXISTS `notificaciones`;
 CREATE TABLE `notificaciones` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `usuario_id` int unsigned NOT NULL,
-  `tipo` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `titulo` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mensaje` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prioridad` enum('critica','advertencia','info') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'info',
-  `modulo` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `entidad_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `enlace` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rol_destinatario` enum('admin','technician','viewer') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `clave_dedup` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titulo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mensaje` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prioridad` enum('critica','advertencia','info') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'info',
+  `modulo` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `entidad_id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `enlace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rol_destinatario` enum('admin','technician','viewer') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `clave_dedup` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `leida` tinyint(1) NOT NULL DEFAULT '0',
   `fecha_leida` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1165,7 +1166,7 @@ CREATE TABLE `notificaciones` (
   KEY `idx_notif_usuario_leida` (`usuario_id`,`leida`,`created_at`),
   KEY `idx_notif_usuario_created` (`usuario_id`,`created_at`),
   CONSTRAINT `fk_notif_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=393 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1174,7 +1175,7 @@ CREATE TABLE `notificaciones` (
 
 LOCK TABLES `notificaciones` WRITE;
 /*!40000 ALTER TABLE `notificaciones` DISABLE KEYS */;
-INSERT INTO `notificaciones` VALUES (1,1,'mantenimiento_hoy','Mantenimiento programado para hoy','El mantenimiento de hp 2200 está programado para hoy.','advertencia','mantenimientos','1','/mantenimientos?dia=Tue Sep 22 2026 00:00:00 GMT-0600 (hora estándar central)','admin','mantenimiento_hoy:mantenimientos:1',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(2,1,'garantia_7d','Garantía próxima a vencer','El equipo 15 vence su garantía en 3 día(s).','advertencia','equipos','1','/equipos/1','admin','garantia_7d:equipos:1',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(3,1,'garantia_7d','Garantía próxima a vencer','El equipo 151122 vence su garantía en 1 día(s).','advertencia','accesorios','3','/accesorios/3','admin','garantia_7d:accesorios:3',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(4,1,'garantia_vencida','Garantía vencida','El equipo 15 tiene la garantía vencida desde hace 1 día(s).','critica','celulares','11','/celulares/11','admin','garantia_vencida:celulares:11',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(74,1,'mantenimiento_vencido','Mantenimiento vencido','El mantenimiento de hp 2200 venció hace 1 día(s).','critica','mantenimientos','1','/mantenimientos?dia=Tue Sep 22 2026 00:00:00 GMT-0600 (hora estándar central)','admin','mantenimiento_vencido:mantenimientos:1',0,NULL,'2026-09-23 09:36:02');
+INSERT INTO `notificaciones` VALUES (1,1,'mantenimiento_hoy','Mantenimiento programado para hoy','El mantenimiento de hp 2200 está programado para hoy.','advertencia','mantenimientos','1','/mantenimientos?dia=Tue Sep 22 2026 00:00:00 GMT-0600 (hora estándar central)','admin','mantenimiento_hoy:mantenimientos:1',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(2,1,'garantia_7d','Garantía próxima a vencer','El equipo 15 vence su garantía en 3 día(s).','advertencia','equipos','1','/equipos/1','admin','garantia_7d:equipos:1',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(3,1,'garantia_7d','Garantía próxima a vencer','El equipo 151122 vence su garantía en 1 día(s).','advertencia','accesorios','3','/accesorios/3','admin','garantia_7d:accesorios:3',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(4,1,'garantia_vencida','Garantía vencida','El equipo 15 tiene la garantía vencida desde hace 1 día(s).','critica','celulares','11','/celulares/11','admin','garantia_vencida:celulares:11',1,'2026-09-22 22:42:05','2026-09-22 22:41:51'),(74,1,'mantenimiento_vencido','Mantenimiento vencido','El mantenimiento de hp 2200 venció hace 1 día(s).','critica','mantenimientos','1','/mantenimientos?dia=Tue Sep 22 2026 00:00:00 GMT-0600 (hora estándar central)','admin','mantenimiento_vencido:mantenimientos:1',0,NULL,'2026-09-23 09:36:02'),(347,1,'garantia_vencida','Garantía vencida','El equipo 151122 tiene la garantía vencida desde hace 1 día(s).','critica','accesorios','3','/accesorios/3','admin','garantia_vencida:accesorios:3',0,NULL,'2026-09-24 14:41:50');
 /*!40000 ALTER TABLE `notificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1187,13 +1188,13 @@ DROP TABLE IF EXISTS `proveedores`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `proveedores` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rfc` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `contacto_nombre` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telefono` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correo` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sitio_web` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `notas` text COLLATE utf8mb4_unicode_ci,
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rfc` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contacto_nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correo` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sitio_web` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notas` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -1222,25 +1223,25 @@ DROP TABLE IF EXISTS `redes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `redes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tipo` enum('wifi','lan','vlan','invitados','servidores','otra') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` enum('wifi','lan','vlan','invitados','servidores','otra') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ubicacion_id` int unsigned DEFAULT NULL,
   `area_id` int unsigned DEFAULT NULL,
   `vlan_numero` smallint unsigned DEFAULT NULL,
-  `rango_ip` varchar(43) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gateway` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dns` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rango_ip` varchar(43) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gateway` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `dns` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dhcp_habilitado` tinyint(1) NOT NULL DEFAULT '0',
-  `seguridad_wifi` enum('wpa2','wpa3','wpa2_enterprise','wep','abierta','otra') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seguridad_wifi` enum('wpa2','wpa3','wpa2_enterprise','wep','abierta','otra') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wifi_password_cifrado` varbinary(512) DEFAULT NULL,
-  `estado` enum('activa','inactiva') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
+  `estado` enum('activa','inactiva') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activa',
   `responsable_id` int unsigned DEFAULT NULL,
-  `descripcion` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `clave_unica` varchar(191) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(lower(`nombre`),_utf8mb4':',coalesce(`ubicacion_id`,0))) STORED,
+  `clave_unica` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(lower(`nombre`),_utf8mb4':',coalesce(`ubicacion_id`,0))) STORED,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_redes_clave` (`clave_unica`),
   KEY `fk_redes_area` (`area_id`),
@@ -1275,7 +1276,7 @@ DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `schema_migrations` (
-  `name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `applied_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1300,22 +1301,22 @@ DROP TABLE IF EXISTS `software`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `software` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fabricante_id` int unsigned DEFAULT NULL,
   `categoria_id` int unsigned DEFAULT NULL,
-  `tipo` enum('comercial','gratuito','open_source','freeware','interno','otro') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comercial',
-  `version_referencia` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo` enum('comercial','gratuito','open_source','freeware','interno','otro') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'comercial',
+  `version_referencia` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `requiere_licencia` tinyint(1) NOT NULL DEFAULT '1',
   `requiere_activacion` tinyint(1) NOT NULL DEFAULT '0',
-  `sitio_web` varchar(190) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
-  `estado` enum('activo','descontinuado','no_permitido') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
+  `sitio_web` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `estado` enum('activo','descontinuado','no_permitido') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'activo',
   `creado_por` int unsigned DEFAULT NULL,
   `actualizado_por` int unsigned DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `clave_unica` varchar(191) COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(lower(`nombre`),_utf8mb4':',coalesce(`fabricante_id`,0))) STORED,
+  `clave_unica` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci GENERATED ALWAYS AS (concat(lower(`nombre`),_utf8mb4':',coalesce(`fabricante_id`,0))) STORED,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_software_clave` (`clave_unica`),
   KEY `fk_software_fabricante` (`fabricante_id`),
@@ -1351,7 +1352,7 @@ DROP TABLE IF EXISTS `tipos_accesorio`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_accesorio` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_tipos_accesorio_nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1376,7 +1377,7 @@ DROP TABLE IF EXISTS `tipos_equipo`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_equipo` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_tipos_equipo_nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1401,7 +1402,7 @@ DROP TABLE IF EXISTS `tipos_impresora`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipos_impresora` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_tipos_impresora_nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1426,7 +1427,7 @@ DROP TABLE IF EXISTS `ubicaciones`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ubicaciones` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `area_id` int unsigned DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -1455,10 +1456,10 @@ DROP TABLE IF EXISTS `user_sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_sessions` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int unsigned NOT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_seen_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `expires_at` datetime NOT NULL,
@@ -1477,7 +1478,7 @@ CREATE TABLE `user_sessions` (
 
 LOCK TABLES `user_sessions` WRITE;
 /*!40000 ALTER TABLE `user_sessions` DISABLE KEYS */;
-INSERT INTO `user_sessions` VALUES ('02d33cd2-beb8-46c5-ab08-e27cb78ae712',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-21 20:53:18','2026-09-23 09:46:38','2026-10-21 20:53:18',NULL,NULL),('058ae281-6366-42fe-a933-b351e09b45c2',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:34:10','2026-09-23 10:34:10','2026-09-23 18:34:10',NULL,NULL),('0ef13c8e-8223-45d4-b333-d03a8ca6981f',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:52:03','2026-09-23 10:52:03','2026-09-23 18:52:03',NULL,NULL),('32fc3534-8cc8-4b6d-8cd0-82204fab4c4a',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:03:36','2026-09-23 10:03:36','2026-10-23 10:03:36',NULL,NULL),('3ffe1cae-e47f-4667-abb1-b46e2a340e9d',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:33:13','2026-09-23 10:33:13','2026-09-23 18:33:13',NULL,NULL),('4f804e45-06d6-4388-8a87-391fdd6ccf46',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:59:10','2026-09-23 10:59:10','2026-09-23 18:59:10',NULL,NULL),('5059ddfb-5496-4a02-a1e6-5b836dd10c23',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:47:19','2026-09-23 10:47:19','2026-09-23 18:47:19',NULL,NULL),('6f7d8db2-1a0a-4c8e-8e5b-487be4dc9558',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:52:26','2026-09-23 10:52:26','2026-09-23 18:52:26',NULL,NULL),('a1bd686f-a206-4704-b656-23002140ccbb',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:21:56','2026-09-23 10:59:35','2026-10-23 10:21:56',NULL,NULL),('a442bc11-1cb6-4060-80eb-e4889955895e',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:06:19','2026-09-23 10:06:19','2026-10-23 10:06:19',NULL,NULL),('fef1dbc9-3675-4168-a45e-ffb42b99b708',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:12:23','2026-09-23 10:12:23','2026-10-23 10:12:23',NULL,NULL);
+INSERT INTO `user_sessions` VALUES ('02d33cd2-beb8-46c5-ab08-e27cb78ae712',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-21 20:53:18','2026-09-23 09:46:38','2026-10-21 20:53:18',NULL,NULL),('058ae281-6366-42fe-a933-b351e09b45c2',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:34:10','2026-09-23 10:34:10','2026-09-23 18:34:10',NULL,NULL),('0ef13c8e-8223-45d4-b333-d03a8ca6981f',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:52:03','2026-09-23 10:52:03','2026-09-23 18:52:03',NULL,NULL),('32fc3534-8cc8-4b6d-8cd0-82204fab4c4a',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:03:36','2026-09-23 10:03:36','2026-10-23 10:03:36',NULL,NULL),('3ffe1cae-e47f-4667-abb1-b46e2a340e9d',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:33:13','2026-09-23 10:33:13','2026-09-23 18:33:13',NULL,NULL),('4f804e45-06d6-4388-8a87-391fdd6ccf46',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:59:10','2026-09-23 10:59:10','2026-09-23 18:59:10',NULL,NULL),('5059ddfb-5496-4a02-a1e6-5b836dd10c23',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:47:19','2026-09-23 10:47:19','2026-09-23 18:47:19',NULL,NULL),('6f7d8db2-1a0a-4c8e-8e5b-487be4dc9558',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0','::1','2026-09-23 10:52:26','2026-09-23 10:52:26','2026-09-23 18:52:26',NULL,NULL),('a1bd686f-a206-4704-b656-23002140ccbb',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:21:56','2026-09-23 10:59:35','2026-10-23 10:21:56',NULL,NULL),('a442bc11-1cb6-4060-80eb-e4889955895e',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:06:19','2026-09-23 10:06:19','2026-10-23 10:06:19',NULL,NULL),('a9c8c0ee-c823-48a1-ab02-0a93a0bdcae8',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','::1','2026-09-23 16:42:35','2026-09-23 16:42:35','2026-10-23 16:42:35','2026-09-23 16:42:47',NULL),('b04ef662-eab0-4304-9c3b-1e4b970dfa10',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36','::1','2026-09-23 16:43:01','2026-09-24 14:57:36','2026-10-23 16:43:01',NULL,NULL),('fef1dbc9-3675-4168-a45e-ffb42b99b708',1,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 OPR/135.0.0.0','::1','2026-09-23 10:12:23','2026-09-23 10:12:23','2026-10-23 10:12:23',NULL,NULL);
 /*!40000 ALTER TABLE `user_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1490,20 +1491,20 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombres` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `apellidos` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('admin','technician','viewer') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'viewer',
+  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombres` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `apellidos` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password_hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('admin','technician','viewer') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'viewer',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `last_login` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `telefono` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cargo` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cargo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password_changed_at` datetime DEFAULT NULL,
   `must_change_password` tinyint(1) NOT NULL DEFAULT '0',
   `desactivado_en` datetime DEFAULT NULL,
@@ -1526,7 +1527,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Administrador','Administrador',NULL,'admin','admin@techcontrol.local','$2a$12$IHEfPNf8t9PkQyK9k345UOLuk6lWlHzDZSAD7teg.JL.Z2m0vmSGK','admin',1,'2026-09-23 10:59:10','2026-09-20 13:47:39','2026-09-23 11:00:29',NULL,NULL,'8a017685-c9c2-4d4b-810a-5cc3631c2261.png',NULL,0,NULL,NULL,'{\"tema\": \"claro\", \"acento\": \"azul\", \"densidad\": \"comoda\"}',0);
+INSERT INTO `users` VALUES (1,'Administrador','Administrador',NULL,'admin','admin@techcontrol.local','$2a$12$IHEfPNf8t9PkQyK9k345UOLuk6lWlHzDZSAD7teg.JL.Z2m0vmSGK','admin',1,'2026-09-23 16:43:01','2026-09-20 13:47:39','2026-09-23 16:43:01',NULL,NULL,'8a017685-c9c2-4d4b-810a-5cc3631c2261.png',NULL,0,NULL,NULL,'{\"tema\": \"claro\", \"acento\": \"azul\", \"densidad\": \"comoda\"}',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1647,4 +1648,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-09-23 11:03:09
+-- Dump completed on 2026-09-24 14:59:49
