@@ -293,10 +293,6 @@ Actualmente se encuentra preparado como proyecto de demostración y portafolio.
 
 Desarrollador de Software / TI
 
-GitHub: https://github.com/TU-USUARIO
+GitHub: https://github.com/Isaacma2116
 
----
 
-## 📄 Licencia
-
-Este proyecto se encuentra bajo la licencia que se indique en el archivo `LICENSE`.
