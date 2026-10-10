@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechControl · Gestión de Activos TI</title>
+    <script>
+      // Aplica el tema ANTES de que React monte, para no mostrar un parpadeo
+      // del tema equivocado. ThemeContext.jsx hace exactamente esto mismo
+      // despues (y lo mantiene al dia); esta copia minima es solo para el
+      // primer pintado.
+      (function () {
+        try {
+          var p = JSON.parse(localStorage.getItem('tc_preferencias_ui') || '{}');
+          var tema = p.tema || 'automatico';
+          var oscuro = tema === 'oscuro' || (tema === 'automatico' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (oscuro) document.documentElement.classList.add('dark');
+          if (p.acento && p.acento !== 'azul') document.documentElement.setAttribute('data-acento', p.acento);
+          if (p.densidad === 'compacta') document.documentElement.setAttribute('data-densidad', 'compacta');
+        } catch (e) { /* localStorage no disponible: se queda en claro por defecto */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

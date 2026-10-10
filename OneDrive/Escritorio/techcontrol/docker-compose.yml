@@ -1,0 +1,55 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: techcontrol-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: America/Mexico_City
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db_data:/var/lib/mysql
+      # Solo se importa la PRIMERA vez (cuando el volumen db_data está vacío)
+      - ./controlequipos.sql:/docker-entrypoint-initdb.d/01-techcontrol.sql:ro
+      - ./docker/mysql-init/02-marcar-migraciones.sql:/docker-entrypoint-initdb.d/02-marcar-migraciones.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  backend:
+    build: ./backend
+    container_name: techcontrol-backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      PORT: 4000
+      NODE_ENV: production
+      TZ: America/Mexico_City
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads:/app/uploads
+      - storage:/app/storage
+
+  frontend:
+    build: ./frontend
+    container_name: techcontrol-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${APP_PORT:-8080}:80"
+
+volumes:
+  db_data:
+  uploads:
+  storage:

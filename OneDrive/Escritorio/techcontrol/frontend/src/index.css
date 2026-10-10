@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tema (claro/oscuro) y color de acento: variables CSS en formato "R G B"
+ * (sin rgb(), lo envuelve tailwind.config.js) para que las clases normales
+ * (bg-white, text-slate-800, bg-brand-900...) admitan opacidad (/10, /5...).
+ *
+ *  - :root                     = claro, acento azul (los valores de siempre).
+ *  - .dark                     = oscuro, acento azul. Se invierte la escala
+ *    de slate (50<->900, 100<->800...), `white` pasa a ser una superficie
+ *    oscura de tarjeta, y el acento se aclara (ver nota de abajo).
+ *  - [data-acento='x']         = ese acento en CLARO.
+ *  - .dark[data-acento='x']    = ese acento en OSCURO.
+ *
+ * Cada acento tiene DOS paletas, no una sola reutilizada en ambos temas: en
+ * claro, brand-900 es bien oscuro (contraste fuerte contra la pagina clara,
+ * ej. el sidebar). Ese mismo tono oscuro, sobre una pagina YA oscura, se ve
+ * plano/perdido - por eso en modo oscuro brand-900/800/700 suben de tono
+ * (quedan donde el 700/600/500 de esa familia de color) y brand-500/400 se
+ * aclaran un poco mas para que resalten sobre el fondo oscuro.
+ *
+ * ThemeContext.jsx decide "claro/oscuro/automatico" y pone/quita la clase
+ * `.dark` en <html>; nunca se usa aqui una media query directamente, para que
+ * JS y CSS nunca queden desincronizados.
+ */
+:root {
+  --color-white: 255 255 255;
+  --color-slate-50: 248 250 252;
+  --color-slate-100: 241 245 249;
+  --color-slate-200: 226 232 240;
+  --color-slate-300: 203 213 225;
+  --color-slate-400: 148 163 184;
+  --color-slate-500: 100 116 139;
+  --color-slate-600: 71 85 105;
+  --color-slate-700: 51 65 85;
+  --color-slate-800: 30 41 59;
+  --color-slate-900: 15 23 42;
+
+  --color-brand-900: 11 31 58;   /* #0B1F3A */
+  --color-brand-800: 18 43 77;   /* #122B4D */
+  --color-brand-700: 27 58 99;   /* #1B3A63 */
+  --color-brand-500: 37 99 235;  /* #2563EB */
+  --color-brand-400: 56 189 248; /* #38BDF8 */
+}
+
+.dark {
+  --color-white: 30 41 59;      /* tarjetas: superficie oscura, no negro puro */
+  --color-slate-50: 15 23 42;   /* fondo de pagina */
+  --color-slate-100: 30 41 59;
+  --color-slate-200: 51 65 85;  /* bordes */
+  --color-slate-300: 71 85 105;
+  --color-slate-400: 100 116 139; /* texto/iconos silenciados: se mantiene similar */
+  --color-slate-500: 165 176 194; /* texto secundario */
+  --color-slate-600: 186 196 212;
+  --color-slate-700: 205 213 226;
+  /* texto principal: gris muy claro, NO blanco casi puro. Blanco sobre negro al maximo
+     contraste "quema" la vista (halo/glow); este tono se queda bien por encima del minimo
+     de contraste WCAG AA pero sin el deslumbre. */
+  --color-slate-800: 222 228 238;
+  --color-slate-900: 235 239 245; /* enfasis fuerte, poco usado: sigue sin llegar a blanco puro */
+
+  /* Acento azul en oscuro (mismo acento por defecto que :root, pero mas claro). */
+  --color-brand-900: 30 58 110; --color-brand-800: 37 70 130;
+  --color-brand-700: 51 90 160; --color-brand-500: 59 130 246; --color-brand-400: 96 165 250;
+}
+
+/* ---- Verde ---- */
+[data-acento='verde'] {
+  --color-brand-900: 11 58 42; --color-brand-800: 18 77 56;
+  --color-brand-700: 27 99 72; --color-brand-500: 5 150 105; --color-brand-400: 52 211 153;
+}
+.dark[data-acento='verde'] {
+  --color-brand-900: 20 90 66; --color-brand-800: 24 110 80;
+  --color-brand-700: 30 130 95; --color-brand-500: 16 185 129; --color-brand-400: 52 211 153;
+}
+
+/* ---- Morado ---- */
+[data-acento='morado'] {
+  --color-brand-900: 36 27 58; --color-brand-800: 51 38 77;
+  --color-brand-700: 69 53 99; --color-brand-500: 124 58 237; --color-brand-400: 167 139 250;
+}
+.dark[data-acento='morado'] {
+  --color-brand-900: 76 58 140; --color-brand-800: 91 70 160;
+  --color-brand-700: 108 85 184; --color-brand-500: 139 92 246; --color-brand-400: 167 139 250;
+}
+
+/* ---- Naranja ---- */
+[data-acento='naranja'] {
+  --color-brand-900: 58 35 11; --color-brand-800: 77 48 18;
+  --color-brand-700: 99 67 27; --color-brand-500: 234 88 12; --color-brand-400: 251 146 60;
+}
+.dark[data-acento='naranja'] {
+  --color-brand-900: 146 64 14; --color-brand-800: 180 83 9;
+  --color-brand-700: 217 119 6; --color-brand-500: 249 115 22; --color-brand-400: 251 146 60;
+}
+
+/* ---- Rojo ---- */
+[data-acento='rojo'] {
+  --color-brand-900: 48 15 26; --color-brand-800: 64 20 35;
+  --color-brand-700: 84 27 45; --color-brand-500: 225 29 72; --color-brand-400: 251 113 133;
+}
+.dark[data-acento='rojo'] {
+  --color-brand-900: 136 19 55; --color-brand-800: 159 18 57;
+  --color-brand-700: 190 18 60; --color-brand-500: 244 63 94; --color-brand-400: 251 113 133;
+}
+
+/* ---- Rosa ---- */
+[data-acento='rosa'] {
+  --color-brand-900: 48 13 35; --color-brand-800: 64 17 47;
+  --color-brand-700: 84 23 61; --color-brand-500: 219 39 119; --color-brand-400: 244 114 182;
+}
+.dark[data-acento='rosa'] {
+  --color-brand-900: 131 24 67; --color-brand-800: 157 23 77;
+  --color-brand-700: 190 24 93; --color-brand-500: 236 72 153; --color-brand-400: 244 114 182;
+}
+
+/* ---- Indigo ---- */
+[data-acento='indigo'] {
+  --color-brand-900: 20 18 58; --color-brand-800: 27 24 77;
+  --color-brand-700: 36 32 99; --color-brand-500: 79 70 229; --color-brand-400: 129 140 248;
+}
+.dark[data-acento='indigo'] {
+  --color-brand-900: 55 48 163; --color-brand-800: 67 56 202;
+  --color-brand-700: 79 70 229; --color-brand-500: 99 102 241; --color-brand-400: 129 140 248;
+}
+
+/* ---- Cian ---- */
+[data-acento='cian'] {
+  --color-brand-900: 5 42 39; --color-brand-800: 7 56 52;
+  --color-brand-700: 10 73 67; --color-brand-500: 13 148 136; --color-brand-400: 45 212 191;
+}
+.dark[data-acento='cian'] {
+  --color-brand-900: 17 94 89; --color-brand-800: 15 118 110;
+  --color-brand-700: 13 148 136; --color-brand-500: 20 184 166; --color-brand-400: 45 212 191;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased transition-colors duration-150;
+}
+
+/* Al cambiar de tema, que todo se desvanezca junto (fondo, texto, bordes) en vez
+   de que unos elementos salten de golpe y otros no: el cambio instantaneo de color
+   es lo que mas "salta a la vista" al alternar modos. No toca transform/opacity para
+   no interferir con animaciones de menus, modales, spinners, etc. */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, text-decoration-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0ms;
+  }
+}
+
+/* Scroll horizontal suave para tablas en movil */
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Densidad "compacta" (Configuracion > Apariencia): reduce el alto de fila en
+   tablas, sin tocar cada tabla del sistema una por una. */
+[data-densidad='compacta'] table :is(td, th) {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+}
